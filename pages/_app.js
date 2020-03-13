@@ -75,6 +75,11 @@ export default class MyApp extends App {
                 <StyledApp>
                     <Head>
                         <title>Coronavirus (COVID-19) Live Counter</title>
+                        <meta
+                            name="description"
+                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                        ></meta>
+                        <link rel="canonical" href="https://rona.live" />
                         <link
                             rel={`apple-touch-icon`}
                             sizes={`180x180`}
@@ -109,6 +114,35 @@ export default class MyApp extends App {
             });
           `,
                             }}
+                        />
+                        <meta
+                            property="og:title"
+                            content="Coronavirus (COVID-19) Live (-ish) Counter"
+                        />
+                        <meta
+                            property="og:description"
+                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                        />
+                        <meta
+                            property="og:image"
+                            content="https://covid19.mathdro.id/api/og"
+                        />
+                        <meta property="og:url" content="https://rona.live" />
+                        <meta
+                            name="twitter:title"
+                            content="Coronavirus (COVID-19) Live (-ish) Counter"
+                        />
+                        <meta
+                            name="twitter:description"
+                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                        />
+                        <meta
+                            name="twitter:image"
+                            content="https://covid19.mathdro.id/api/og"
+                        />
+                        <meta
+                            name="twitter:card"
+                            content="summary_large_image"
                         />
                     </Head>
                     <GlobalStyle />
