@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import AnimatedNumber from 'react-animated-number';
 
 const StyledStat = styled.div`
     display: grid;
@@ -11,38 +12,27 @@ const StyledStat = styled.div`
     .name {
         font-size: 1em;
     }
-
-    .value {
-        font-size: 3em;
-        opacity: 0.5;
-    }
-
-    /* .blinking {
-        animation: blinkingText 1.2s infinite;
-    }
-    @keyframes blinkingText {
-        0% {
-            color: white;
-        }
-        49% {
-            color: white;
-        }
-        60% {
-            color: transparent;
-        }
-        99% {
-            color: transparent;
-        }
-        100% {
-            color: white;
-        } */
-    }
 `;
 
 const Stat = ({ name, value }) => (
     <StyledStat>
         <h2 className={`name`}>{name}</h2>
-        <span className={`value blinking`}>{value.toLocaleString()}</span>
+        <AnimatedNumber
+            component="text"
+            value={value}
+            style={{
+                transition: '0.8s ease-out',
+                fontSize: 48,
+                transitionProperty: 'background-color, color, opacity',
+                fontSize: '3em',
+                opacity: '0.5',
+            }}
+            frameStyle={perc =>
+                perc === 100 ? {} : { backgroundColor: '#ffeb3b' }
+            }
+            duration={300}
+            formatValue={n => n.toLocaleString()}
+        />
     </StyledStat>
 );
 

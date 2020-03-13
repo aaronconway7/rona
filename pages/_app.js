@@ -4,6 +4,9 @@ import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Normalize } from 'styled-normalize';
 
+import ContextProvider from '../global-state/state';
+import { GA_TRACKING_ID } from '../lib/gtag';
+
 const GlobalStyle = createGlobalStyle`
     ${Normalize};
 
@@ -28,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
             padding: 100px;
         }
     }
+
+    a {
+        color: inherit;
+    }
 `;
 
 const StyledApp = styled.div`
@@ -48,27 +55,74 @@ const StyledApp = styled.div`
     }
 `;
 
+const StyledMain = styled.main`
+    display: grid;
+    grid-gap: 50px;
+    justify-items: center;
+    .title {
+        text-align: center;
+        .rona {
+            color: #d82239;
+        }
+    }
+`;
+
 export default class MyApp extends App {
     render() {
         const { Component, pageProps } = this.props;
         return (
-            <StyledApp>
-                <Head>
-                    <title>Coronavirus (COVID-19) Live Counter</title>
-                    <link
-                        rel={`shortcut icon`}
-                        href={`/assets/img/favicon.png`}
-                    />
-                </Head>
-                <GlobalStyle />
-                <Component {...pageProps} />
-                <p className={`made-by`}>
-                    Made by{' '}
-                    <a href={`https://aaronconway.co.uk`} target={`_blank`}>
-                        Aaron
-                    </a>
-                </p>
-            </StyledApp>
+            <ContextProvider>
+                <StyledApp>
+                    <Head>
+                        <title>Coronavirus (COVID-19) Live Counter</title>
+                        <link
+                            rel={`apple-touch-icon`}
+                            sizes={`180x180`}
+                            href={`/apple-touch-icon.png`}
+                        />
+                        <link
+                            rel={`icon`}
+                            type={`image/png`}
+                            sizes={`32x32`}
+                            href={`/favicon-32x32.png`}
+                        />
+                        <link
+                            rel={`icon`}
+                            type={`image/png`}
+                            sizes={`16x16`}
+                            href={`/favicon-16x16.png`}
+                        />
+                        <link rel={`manifest`} href={`/site.webmanifest`} />
+                        {/* Global Site Tag (gtag.js) - Google Analytics */}
+                        <script
+                            async
+                            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+                        />
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+                            }}
+                        />
+                    </Head>
+                    <GlobalStyle />
+                    <StyledMain>
+                        <Component {...pageProps} />
+                    </StyledMain>
+                    <p className={`made-by`}>
+                        Made by{' '}
+                        <a href={`https://aaronconway.co.uk`} target={`_blank`}>
+                            Aaron
+                        </a>
+                    </p>
+                </StyledApp>
+            </ContextProvider>
         );
     }
 }
