@@ -118,28 +118,28 @@ export default class MyApp extends App {
                         />
                         <meta
                             property="og:title"
-                            content="Coronavirus (COVID-19) Live (-ish) Counter"
+                            content="Coronavirus (COVID-19) Live-ish Counter"
                         />
                         <meta
                             property="og:description"
-                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                            content="Live-ish counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         />
                         <meta
                             property="og:image"
-                            content="https://covid19.mathdro.id/api/og"
+                            content="/img/thumbnail.png"
                         />
                         <meta property="og:url" content="https://rona.live" />
                         <meta
                             name="twitter:title"
-                            content="Coronavirus (COVID-19) Live (-ish) Counter"
+                            content="Coronavirus (COVID-19) Live-ish Counter"
                         />
                         <meta
                             name="twitter:description"
-                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                            content="Live-ish counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         />
                         <meta
                             name="twitter:image"
-                            content="https://covid19.mathdro.id/api/og"
+                            content="/img/thumbnail.png"
                         />
                         <meta
                             name="twitter:card"
