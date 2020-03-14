@@ -20,6 +20,7 @@
         "react-animated-number": "^0.4.4",
         "react-dom": "^16.7.0",
         "react-moment": "^0.9.7",
+        "react-select": "^3.0.8",
         "styled-components": "^4.0.0",
         "styled-normalize": "^8.0.7"
     },

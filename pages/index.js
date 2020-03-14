@@ -7,6 +7,7 @@ import { flag } from 'country-emoji';
 import Stat from '../components/Stat';
 import Map from '../components/Map';
 import { CountryContext } from '../global-state/country';
+import CountrySelector from '../components/CountrySelector';
 
 const StyledIndex = styled.div`
     display: grid;
@@ -70,6 +71,16 @@ const StyledIndex = styled.div`
                 }
             }
 
+            .who {
+                background-color: #018dc9;
+
+                &:hover {
+                    background-color: transparent;
+                    color: #018dc9;
+                    border: 1px solid #018dc9;
+                }
+            }
+
             a {
                 color: white;
                 padding: 1em;
@@ -77,6 +88,14 @@ const StyledIndex = styled.div`
                 border: 1px solid transparent;
                 margin: 10px;
             }
+        }
+    }
+
+    .feeling-unwell {
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
         }
     }
 
@@ -146,11 +165,7 @@ const Index = ({ data }) => {
                 />
                 <Stat name={`Deaths 🙏`} value={deaths && deaths.value} />
             </div>
-            {country && (
-                <button className={`reset-btn`} onClick={() => resetCountry()}>
-                    Reset to 🌍
-                </button>
-            )}
+            <CountrySelector />
             <Map />
             <div className={`donate`}>
                 <p>
@@ -159,19 +174,35 @@ const Index = ({ data }) => {
                 </p>
                 <div className={`buttons`}>
                     <a
-                        href={`https://www.unicef.org.uk/donate/coronavirus/`}
-                        className={`unicef`}
+                        href={`https://covid19responsefund.org/`}
+                        className={`who`}
+                        target={`_blank`}
                     >
-                        Unicef
+                        WHO
                     </a>
                     <a
                         href={`https://www.globalgiving.org/projects/coronavirus-relief-fund/`}
                         className={`global-giving`}
+                        target={`_blank`}
                     >
                         Global Giving
                     </a>
+                    <a
+                        href={`https://www.unicef.org.uk/donate/coronavirus/`}
+                        className={`unicef`}
+                        target={`_blank`}
+                    >
+                        Unicef
+                    </a>
                 </div>
             </div>
+            <a
+                href={`https://www.nhs.uk/conditions/coronavirus-covid-19/`}
+                target={`_blank`}
+                className={`feeling-unwell`}
+            >
+                Feeling Unwell?
+            </a>
         </StyledIndex>
     );
 };

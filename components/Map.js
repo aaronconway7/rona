@@ -13,17 +13,23 @@ const StyledSvg = styled.svg`
         stroke: #555;
         stroke-width: 0.5px;
         opacity: 0.1;
-        transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.2s ease-in-out, fill 0.5s ease-in-out;
         cursor: pointer;
 
         &:hover {
             opacity: 0.25;
         }
     }
+
+    [cc="${props => props.selectedCountry}"] {
+        opacity: 0.25;
+        fill: #d82239;
+    }
+
 `;
 
 const Map = () => {
-    const { setCountry } = useContext(CountryContext);
+    const { country, setCountry } = useContext(CountryContext);
     const svgRef = useRef(null);
     useEffect(() => {
         const svg = svgRef.current;
@@ -41,10 +47,10 @@ const Map = () => {
 
         if (elem.getAttribute(`cc`)) {
             const cc = elem.getAttribute(`cc`);
-            setCountry(cc);
+            setCountry(cc.toLowerCase());
         } else if (elemParent.getAttribute(`cc`)) {
             const cc = elemParent.getAttribute(`cc`);
-            setCountry(cc);
+            setCountry(cc.toLowerCase());
         }
     };
 
@@ -55,6 +61,7 @@ const Map = () => {
             viewBox="9 3 940 530"
             xmlns="http://www.w3.org/2000/svg"
             ref={svgRef}
+            selectedCountry={country}
         >
             <rect id={`bg`} x="9" y="3" width="100%" height="100%" />
             <g cc="tr">

@@ -80,6 +80,7 @@ export default class MyApp extends App {
                             content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         ></meta>
                         <link rel="canonical" href="https://rona.live" />
+                        <meta name="theme-color" content="#101010"></meta>
                         <link
                             rel={`apple-touch-icon`}
                             sizes={`180x180`}
