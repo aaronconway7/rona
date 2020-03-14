@@ -40,7 +40,7 @@ const customStyles = {
     }),
 };
 
-const options = [{ value: null, label: `🌍 Wold` }];
+const options = [{ value: null, label: `🌍 World` }];
 
 const CountrySelector = () => {
     const { country, setCountry } = useContext(CountryContext);
