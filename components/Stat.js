@@ -18,7 +18,11 @@ const StyledStat = styled.div`
 
         .new-label {
             font-size: 0.8em;
-            /* margin-right: 0.4em; */
+
+            .value {
+                font-size: 1em;
+                opacity: 0.5;
+            }
         }
     }
 `;
@@ -44,22 +48,10 @@ const Stat = ({ name, value, newValue }) => (
         />
         {newValue && (
             <div className={`new-cases`}>
-                <span className={`new-label`}>new today - </span>
-                <AnimatedNumber
-                    component="text"
-                    value={newValue}
-                    style={{
-                        transition: '0.8s ease-out',
-                        transitionProperty: 'background-color, color, opacity',
-                        fontSize: '1em',
-                        opacity: '0.5',
-                    }}
-                    frameStyle={perc =>
-                        perc === 100 ? {} : { backgroundColor: '#ffeb3b' }
-                    }
-                    duration={300}
-                    formatValue={n => n.toLocaleString()}
-                />
+                <span className={`new-label`}>
+                    new today -{' '}
+                    <span className={`value`}>{newValue.toLocaleString()}</span>
+                </span>
             </div>
         )}
     </StyledStat>

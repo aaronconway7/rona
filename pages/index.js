@@ -165,7 +165,7 @@ const Index = ({ data }) => {
                     ...data.results[0],
                 });
             }
-            setLastUpdate(new Date());
+            // setLastUpdate(new Date());
         } catch (error) {
             console.log(error);
             setCountry(null);
