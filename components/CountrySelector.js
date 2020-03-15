@@ -46,13 +46,13 @@ const CountrySelector = () => {
     const { country, setCountry } = useContext(CountryContext);
     useEffect(() => {
         async function fetchData() {
-            const res = await fetch(`https://covid19.mathdro.id/api/countries`);
+            const res = await fetch(`https://restcountries.eu/rest/v2/all`);
             const data = await res.json();
 
-            Object.entries(data.countries).map(country =>
+            data.map(country =>
                 options.push({
-                    value: country[1].toLowerCase(),
-                    label: `${flag(country[1]) || ''} ${country[0]}`,
+                    value: country.alpha2Code.toLowerCase(),
+                    label: `${flag(country.alpha2Code) || ''} ${country.name}`,
                 })
             );
         }

@@ -77,7 +77,7 @@ export default class MyApp extends App {
                         <title>Coronavirus (COVID-19) Live Counter</title>
                         <meta
                             name="description"
-                            content="Live (-ish) counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                            content="Live counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         ></meta>
                         <link rel="canonical" href="https://rona.live" />
                         <meta name="theme-color" content="#101010"></meta>
@@ -122,7 +122,7 @@ export default class MyApp extends App {
                         />
                         <meta
                             property="og:description"
-                            content="Live-ish counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                            content="Live counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         />
                         <meta
                             property="og:image"
@@ -135,7 +135,7 @@ export default class MyApp extends App {
                         />
                         <meta
                             name="twitter:description"
-                            content="Live-ish counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+                            content="Live counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
                         />
                         <meta
                             name="twitter:image"

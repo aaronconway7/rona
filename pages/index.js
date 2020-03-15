@@ -108,20 +108,35 @@ const StyledIndex = styled.div`
     }
 
     .last-updated {
-        opacity: 0.5;
+        color: rgba(255, 255, 255, 0.5);
         font-size: 0.8em;
+
+        .refresh {
+            color: white;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: opacity 0.2s ease-in-out;
+
+            &:hover {
+                opacity: 0.5;
+            }
+        }
     }
 `;
 
 const Index = ({ data }) => {
     const [countryData, setCountryData] = useState({
-        confirmed: data.confirmed,
-        recovered: data.recovered,
-        deaths: data.deaths,
-        lastUpdate: data.lastUpdate,
+        ...data.results[0],
     });
+    const [lastUpdate, setLastUpdate] = useState(new Date());
     const { country, setCountry } = useContext(CountryContext);
-    const { confirmed, recovered, deaths, lastUpdate } = countryData;
+    const {
+        total_cases,
+        total_recovered,
+        total_deaths,
+        total_new_cases_today,
+        total_new_deaths_today,
+    } = countryData;
 
     useEffect(() => {
         getCountryData(country);
@@ -132,16 +147,25 @@ const Index = ({ data }) => {
             let res;
             if (country) {
                 res = await fetch(
-                    `https://covid19.mathdro.id/api/countries/${country}`
+                    `https://thevirustracker.com/free-api?countryTotal=${country}`
                 );
             } else {
-                res = await fetch(`https://covid19.mathdro.id/api`);
+                res = await fetch(
+                    `https://thevirustracker.com/free-api?global=stats`
+                );
             }
             const data = await res.json();
             if (!res.ok) throw data.error.message;
-            setCountryData({
-                ...data,
-            });
+            if (country) {
+                setCountryData({
+                    ...data.countrydata[0],
+                });
+            } else {
+                setCountryData({
+                    ...data.results[0],
+                });
+            }
+            setLastUpdate(new Date());
         } catch (error) {
             console.log(error);
             setCountry(null);
@@ -152,6 +176,11 @@ const Index = ({ data }) => {
         setCountry(null);
     };
 
+    const handleRefresh = () => {
+        getCountryData(country);
+        setLastUpdate(new Date());
+    };
+
     return (
         <StyledIndex>
             <h1 className={`title`}>
@@ -159,19 +188,23 @@ const Index = ({ data }) => {
                 {country ? flag(country) : `🌍`}
             </h1>
             <span className={`last-updated`}>
-                Last Updated:{' '}
-                <Moment fromNow>{lastUpdate && lastUpdate}</Moment>
+                Last Updated: <Moment fromNow>{lastUpdate}</Moment> -{' '}
+                <span onClick={() => handleRefresh()} className={`refresh`}>
+                    Refresh
+                </span>
             </span>
             <div className={`main-stats`}>
                 <Stat
                     name={`Confirmed 😷`}
-                    value={confirmed && confirmed.value}
+                    value={total_cases}
+                    newValue={total_new_cases_today}
                 />
+                <Stat name={`Recovered ✌️`} value={total_recovered} />
                 <Stat
-                    name={`Recovered ✌️`}
-                    value={recovered && recovered.value}
+                    name={`Deaths 🙏`}
+                    value={total_deaths}
+                    newValue={total_new_deaths_today}
                 />
-                <Stat name={`Deaths 🙏`} value={deaths && deaths.value} />
             </div>
             <CountrySelector />
             <Map />
@@ -218,7 +251,9 @@ const Index = ({ data }) => {
 // This gets called on every request
 export async function getServerSideProps() {
     // Fetch data from external API
-    const res = await fetch(`https://covid19.mathdro.id/api`);
+    const res = await fetch(
+        `https://thevirustracker.com/free-api?global=stats`
+    );
     const data = await res.json();
 
     // Pass data to the page via props
