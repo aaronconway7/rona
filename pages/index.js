@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import fetch from 'isomorphic-unfetch';
-import Moment from 'react-moment';
 import { flag } from 'country-emoji';
 
 import Stat from '../components/Stat';
@@ -128,7 +127,6 @@ const Index = ({ data }) => {
     const [countryData, setCountryData] = useState({
         ...data.results[0],
     });
-    const [lastUpdate, setLastUpdate] = useState(new Date());
     const { country, setCountry } = useContext(CountryContext);
     const {
         total_cases,
@@ -165,7 +163,6 @@ const Index = ({ data }) => {
                     ...data.results[0],
                 });
             }
-            // setLastUpdate(new Date());
         } catch (error) {
             console.log(error);
             setCountry(null);
@@ -187,12 +184,6 @@ const Index = ({ data }) => {
                 Co<span className={`rona`}>rona</span>virus (COVID-19) Count{' '}
                 {country ? flag(country) : `🌍`}
             </h1>
-            <span className={`last-updated`}>
-                Last Updated: <Moment fromNow>{lastUpdate}</Moment> -{' '}
-                <span onClick={() => handleRefresh()} className={`refresh`}>
-                    Refresh
-                </span>
-            </span>
             <div className={`main-stats`}>
                 <Stat
                     name={`Confirmed 😷`}

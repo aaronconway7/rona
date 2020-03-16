@@ -46,14 +46,16 @@ const Stat = ({ name, value, newValue }) => (
             duration={300}
             formatValue={n => n.toLocaleString()}
         />
-        {newValue && (
-            <div className={`new-cases`}>
-                <span className={`new-label`}>
-                    new today -{' '}
-                    <span className={`value`}>{newValue.toLocaleString()}</span>
+        <div className={`new-cases`}>
+            <span className={`new-label`}>
+                new today -{' '}
+                <span className={`value`}>
+                    {newValue || newValue === 0
+                        ? newValue.toLocaleString()
+                        : `N/A`}
                 </span>
-            </div>
-        )}
+            </span>
+        </div>
     </StyledStat>
 );
 
