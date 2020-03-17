@@ -44,20 +44,24 @@ const options = [{ value: null, label: `🌍 World` }];
 
 const CountrySelector = () => {
     const { country, setCountry } = useContext(CountryContext);
-    useEffect(() => {
-        async function fetchData() {
-            const res = await fetch(`https://restcountries.eu/rest/v2/all`);
-            const data = await res.json();
 
-            data.map(country =>
-                options.push({
-                    value: country.alpha2Code.toLowerCase(),
-                    label: `${flag(country.alpha2Code) || ''} ${country.name}`,
-                })
-            );
+    useEffect(() => {
+        if (options.length === 1) {
+            fetchData();
         }
-        fetchData();
     }, []);
+
+    const fetchData = async () => {
+        const res = await fetch(`https://restcountries.eu/rest/v2/all`);
+        const data = await res.json();
+
+        data.map(country =>
+            options.push({
+                value: country.alpha2Code.toLowerCase(),
+                label: `${flag(country.alpha2Code) || ''} ${country.name}`,
+            })
+        );
+    };
 
     const handleChange = selectedOption => {
         setCountry(selectedOption.value);

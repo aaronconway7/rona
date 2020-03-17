@@ -127,6 +127,7 @@ const Index = ({ data }) => {
     const [countryData, setCountryData] = useState({
         ...data.results[0],
     });
+    const [loading, setLoading] = useState(false);
     const { country, setCountry } = useContext(CountryContext);
     const {
         total_cases,
@@ -141,6 +142,7 @@ const Index = ({ data }) => {
     }, [country]);
 
     const getCountryData = async country => {
+        setLoading(true);
         try {
             let res;
             if (country) {
@@ -167,6 +169,7 @@ const Index = ({ data }) => {
             console.log(error);
             setCountry(null);
         }
+        setLoading(false);
     };
 
     const resetCountry = () => {
@@ -189,12 +192,18 @@ const Index = ({ data }) => {
                     name={`Confirmed 😷`}
                     value={total_cases}
                     newValue={total_new_cases_today}
+                    loading={loading}
                 />
-                <Stat name={`Recovered ✌️`} value={total_recovered} />
+                <Stat
+                    name={`Recovered ✌️`}
+                    value={total_recovered}
+                    loading={loading}
+                />
                 <Stat
                     name={`Deaths 🙏`}
                     value={total_deaths}
                     newValue={total_new_deaths_today}
+                    loading={loading}
                 />
             </div>
             <CountrySelector />
