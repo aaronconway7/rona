@@ -123,19 +123,47 @@ const StyledIndex = styled.div`
     }
 `;
 
+const stats = [
+    {
+        label: `Confirmed 😷`,
+        value: `total_cases`,
+        newValue: `total_new_cases_today`,
+    },
+    {
+        label: `Recovered ✌️`,
+        value: `total_recovered`,
+    },
+    {
+        label: `Deaths 🙏`,
+        value: `total_deaths`,
+        newValue: `total_new_deaths_today`,
+    },
+];
+
+const donate = [
+    {
+        label: `WHO`,
+        class: `who`,
+        link: `https://covid19responsefund.org/`,
+    },
+    {
+        label: `Global Giving`,
+        class: `global-giving`,
+        link: `https://www.globalgiving.org/projects/coronavirus-relief-fund/`,
+    },
+    {
+        label: `Unicef`,
+        class: `unicef`,
+        link: `https://www.unicef.org.uk/donate/coronavirus/`,
+    },
+];
+
 const Index = ({ data }) => {
     const [countryData, setCountryData] = useState({
         ...data.results[0],
     });
     const [loading, setLoading] = useState(false);
     const { country, setCountry } = useContext(CountryContext);
-    const {
-        total_cases,
-        total_recovered,
-        total_deaths,
-        total_new_cases_today,
-        total_new_deaths_today,
-    } = countryData;
 
     useEffect(() => {
         getCountryData(country);
@@ -172,15 +200,6 @@ const Index = ({ data }) => {
         setLoading(false);
     };
 
-    const resetCountry = () => {
-        setCountry(null);
-    };
-
-    const handleRefresh = () => {
-        getCountryData(country);
-        setLastUpdate(new Date());
-    };
-
     return (
         <StyledIndex>
             <h1 className={`title`}>
@@ -188,23 +207,15 @@ const Index = ({ data }) => {
                 {country ? flag(country) : `🌍`}
             </h1>
             <div className={`main-stats`}>
-                <Stat
-                    name={`Confirmed 😷`}
-                    value={total_cases}
-                    newValue={total_new_cases_today}
-                    loading={loading}
-                />
-                <Stat
-                    name={`Recovered ✌️`}
-                    value={total_recovered}
-                    loading={loading}
-                />
-                <Stat
-                    name={`Deaths 🙏`}
-                    value={total_deaths}
-                    newValue={total_new_deaths_today}
-                    loading={loading}
-                />
+                {stats.map(stat => (
+                    <Stat
+                        name={stat.label}
+                        value={countryData[stat.value]}
+                        newValue={countryData[stat.newValue]}
+                        loading={loading}
+                        key={stat.value}
+                    />
+                ))}
             </div>
             <CountrySelector />
             <Map />
@@ -214,27 +225,16 @@ const Index = ({ data }) => {
                     people.
                 </p>
                 <div className={`buttons`}>
-                    <a
-                        href={`https://covid19responsefund.org/`}
-                        className={`who`}
-                        target={`_blank`}
-                    >
-                        WHO
-                    </a>
-                    <a
-                        href={`https://www.globalgiving.org/projects/coronavirus-relief-fund/`}
-                        className={`global-giving`}
-                        target={`_blank`}
-                    >
-                        Global Giving
-                    </a>
-                    <a
-                        href={`https://www.unicef.org.uk/donate/coronavirus/`}
-                        className={`unicef`}
-                        target={`_blank`}
-                    >
-                        Unicef
-                    </a>
+                    {donate.map(button => (
+                        <a
+                            href={button.link}
+                            className={button.class}
+                            target={`_blank`}
+                            key={button.class}
+                        >
+                            {button.label}
+                        </a>
+                    ))}
                 </div>
             </div>
             <a

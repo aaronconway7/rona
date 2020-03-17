@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import AnimatedNumber from 'react-animated-number';
 import { ClockLoader } from 'react-spinners';
 
