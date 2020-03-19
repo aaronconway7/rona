@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Select from 'react-select';
 import { useEffect } from 'react';
-import { flag } from 'country-emoji';
+import { flag, code } from 'country-emoji';
 
 import { CountryContext } from '../global-state/country';
 
@@ -42,7 +42,7 @@ const customStyles = {
 
 const options = [{ value: null, label: `🌍 World` }];
 
-const CountrySelector = () => {
+const CountrySelector = ({ countries }) => {
     const { country, setCountry } = useContext(CountryContext);
 
     useEffect(() => {
@@ -52,15 +52,17 @@ const CountrySelector = () => {
     }, []);
 
     const fetchData = async () => {
-        const res = await fetch(`https://restcountries.eu/rest/v2/all`);
-        const data = await res.json();
-
-        data.map(country =>
-            options.push({
-                value: country.alpha2Code.toLowerCase(),
-                label: `${flag(country.alpha2Code) || ''} ${country.name}`,
-            })
+        const sortedCountries = countries.sort((a, b) =>
+            a.displayName.localeCompare(b.displayName)
         );
+        sortedCountries.map(country => {
+            options.push({
+                value: country.displayName,
+                label: `${flag(country.displayName) || ''} ${
+                    country.displayName
+                }`,
+            });
+        });
     };
 
     const handleChange = selectedOption => {

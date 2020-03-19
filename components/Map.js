@@ -1,5 +1,6 @@
 import { useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
+const { flag, code, name, countries } = require('country-emoji');
 
 import { CountryContext } from '../global-state/country';
 
@@ -47,10 +48,10 @@ const Map = () => {
 
         if (elem.getAttribute(`cc`)) {
             const cc = elem.getAttribute(`cc`);
-            setCountry(cc.toLowerCase());
+            setCountry(name(cc));
         } else if (elemParent.getAttribute(`cc`)) {
             const cc = elemParent.getAttribute(`cc`);
-            setCountry(cc.toLowerCase());
+            setCountry(name(cc));
         }
     };
 
@@ -61,7 +62,7 @@ const Map = () => {
             viewBox="9 3 940 530"
             xmlns="http://www.w3.org/2000/svg"
             ref={svgRef}
-            selectedCountry={country}
+            selectedCountry={code(country) && code(country).toLowerCase()}
         >
             <rect id={`bg`} x="9" y="3" width="100%" height="100%" />
             <g cc="tr">
