@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import fetch from 'isomorphic-unfetch';
-import { flag, name, code } from 'country-emoji';
-import Moment from 'react-moment';
+import { flag } from 'country-emoji';
 
 import Stat from '../components/Stat';
 import Map from '../components/Map';
@@ -127,17 +126,17 @@ const StyledIndex = styled.div`
 const stats = [
     {
         label: `Confirmed 😷`,
-        value: `totalConfirmed`,
-        // newValue: `total_new_cases_today`,
+        value: `total_cases`,
+        newValue: `total_new_cases_today`,
     },
     {
         label: `Recovered ✌️`,
-        value: `totalRecovered`,
+        value: `total_recovered`,
     },
     {
         label: `Deaths 🙏`,
-        value: `totalDeaths`,
-        // newValue: `total_new_deaths_today`,
+        value: `total_deaths`,
+        newValue: `total_new_deaths_today`,
     },
 ];
 
@@ -160,7 +159,9 @@ const donate = [
 ];
 
 const Index = ({ data }) => {
-    const [countryData, setCountryData] = useState(data);
+    const [countryData, setCountryData] = useState({
+        ...data.results[0],
+    });
     const [loading, setLoading] = useState(false);
     const { country, setCountry } = useContext(CountryContext);
 
@@ -169,19 +170,32 @@ const Index = ({ data }) => {
     }, [country]);
 
     const getCountryData = async country => {
-        await setLoading(true);
-        if (country === `Russian Federation`) {
-            await setCountry(`Russia`);
-            return;
-        }
-        const selectedCountryData = data.areas.find(
-            countryData => countryData.displayName === country
-        );
-        if (selectedCountryData) {
-            setCountryData(selectedCountryData);
-        } else {
+        setLoading(true);
+        try {
+            let res;
+            if (country) {
+                res = await fetch(
+                    `https://thevirustracker.com/free-api?countryTotal=${country}`
+                );
+            } else {
+                res = await fetch(
+                    `https://thevirustracker.com/free-api?global=stats`
+                );
+            }
+            const data = await res.json();
+            if (!res.ok) throw data.error.message;
+            if (country) {
+                setCountryData({
+                    ...data.countrydata[0],
+                });
+            } else {
+                setCountryData({
+                    ...data.results[0],
+                });
+            }
+        } catch (error) {
+            console.log(error);
             setCountry(null);
-            setCountryData(data);
         }
         setLoading(false);
     };
@@ -192,9 +206,6 @@ const Index = ({ data }) => {
                 Co<span className={`rona`}>rona</span>virus (COVID-19) Count{' '}
                 {country ? flag(country) : `🌍`}
             </h1>
-            <span className={`last-updated`}>
-                Last Updated: <Moment fromNow>{countryData.lastUpdated}</Moment>
-            </span>
             <div className={`main-stats`}>
                 {stats.map(stat => (
                     <Stat
@@ -206,7 +217,7 @@ const Index = ({ data }) => {
                     />
                 ))}
             </div>
-            <CountrySelector countries={data.areas} />
+            <CountrySelector />
             <Map />
             <div className={`donate`}>
                 <p>
@@ -241,8 +252,7 @@ const Index = ({ data }) => {
 export async function getServerSideProps() {
     // Fetch data from external API
     const res = await fetch(
-        // `https://thevirustracker.com/free-api?global=stats`
-        `https://www.bing.com/covid/data?IG=B0D3AD18FB0149129EBBAC5774C5353A`
+        `https://thevirustracker.com/free-api?global=stats`
     );
     const data = await res.json();
 
