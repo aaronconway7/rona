@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import fetch from 'isomorphic-unfetch';
 import { flag } from 'country-emoji';
+import useSwr from 'swr';
+import Moment from 'react-moment';
 
 import Stat from '../components/Stat';
 import Map from '../components/Map';
 import { CountryContext } from '../global-state/country';
 import CountrySelector from '../components/CountrySelector';
+import Donate from '../components/Donate';
 
 const StyledIndex = styled.div`
     display: grid;
@@ -50,54 +53,6 @@ const StyledIndex = styled.div`
         }
     }
 
-    .donate {
-        display: grid;
-        text-align: center;
-        grid-gap: 25px;
-
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            .unicef {
-                background-color: #02aeef;
-
-                &:hover {
-                    background-color: transparent;
-                    color: #02aeef;
-                    border: 1px solid #02aeef;
-                }
-            }
-            .global-giving {
-                background-color: #df7c1d;
-
-                &:hover {
-                    background-color: transparent;
-                    color: #df7c1d;
-                    border: 1px solid #df7c1d;
-                }
-            }
-
-            .who {
-                background-color: #018dc9;
-
-                &:hover {
-                    background-color: transparent;
-                    color: #018dc9;
-                    border: 1px solid #018dc9;
-                }
-            }
-
-            a {
-                color: white;
-                padding: 1em;
-                min-width: 200px;
-                border: 1px solid transparent;
-                margin: 10px;
-            }
-        }
-    }
-
     .feeling-unwell {
         opacity: 0.5;
 
@@ -126,79 +81,37 @@ const StyledIndex = styled.div`
 const stats = [
     {
         label: `Confirmed 😷`,
-        value: `total_cases`,
-        newValue: `total_new_cases_today`,
+        value: `confirmed`,
+        newValue: `new_confirmed`,
     },
     {
         label: `Recovered ✌️`,
-        value: `total_recovered`,
+        value: `recovered`,
+        newValue: `new_recovered`,
     },
     {
         label: `Deaths 🙏`,
-        value: `total_deaths`,
-        newValue: `total_new_deaths_today`,
+        value: `deaths`,
+        newValue: `new_deaths`,
     },
 ];
 
-const donate = [
-    {
-        label: `WHO`,
-        class: `who`,
-        link: `https://covid19responsefund.org/`,
-    },
-    {
-        label: `Global Giving`,
-        class: `global-giving`,
-        link: `https://www.globalgiving.org/projects/coronavirus-relief-fund/`,
-    },
-    {
-        label: `Unicef`,
-        class: `unicef`,
-        link: `https://www.unicef.org.uk/donate/coronavirus/`,
-    },
-];
+const fetcher = url => fetch(url).then(res => res.json());
 
-const Index = ({ data }) => {
-    const [countryData, setCountryData] = useState({
-        ...data.results[0],
-    });
-    const [loading, setLoading] = useState(false);
+const Index = props => {
+    // const initialData = props.data;
+    const { data: timelineData, error: timelineError } = useSwr(
+        'https://corona-api.com/timeline',
+        fetcher
+    );
+    const { data: countriesData, error: countriesError } = useSwr(
+        'https://corona-api.com/countries?include=timeline',
+        fetcher
+    );
     const { country, setCountry } = useContext(CountryContext);
 
-    useEffect(() => {
-        getCountryData(country);
-    }, [country]);
-
-    const getCountryData = async country => {
-        setLoading(true);
-        try {
-            let res;
-            if (country) {
-                res = await fetch(
-                    `https://thevirustracker.com/free-api?countryTotal=${country}`
-                );
-            } else {
-                res = await fetch(
-                    `https://thevirustracker.com/free-api?global=stats`
-                );
-            }
-            const data = await res.json();
-            if (!res.ok) throw data.error.message;
-            if (country) {
-                setCountryData({
-                    ...data.countrydata[0],
-                });
-            } else {
-                setCountryData({
-                    ...data.results[0],
-                });
-            }
-        } catch (error) {
-            console.log(error);
-            setCountry(null);
-        }
-        setLoading(false);
-    };
+    if (timelineError || countriesError) return <div>Failed to load users</div>;
+    if (!timelineData || !countriesData) return <div>Loading...</div>;
 
     return (
         <StyledIndex>
@@ -206,37 +119,39 @@ const Index = ({ data }) => {
                 Co<span className={`rona`}>rona</span>virus (COVID-19) Count{' '}
                 {country ? flag(country) : `🌍`}
             </h1>
+            <p className={`last-updated`}>
+                Last updated: {` `}
+                <Moment fromNow>
+                    {country
+                        ? countriesData.data.find(
+                              countryData =>
+                                  countryData.code.toLowerCase() === country
+                          ).latest_data
+                        : timelineData.updated_at}
+                </Moment>
+            </p>
             <div className={`main-stats`}>
-                {stats.map(stat => (
-                    <Stat
-                        name={stat.label}
-                        value={countryData[stat.value]}
-                        newValue={countryData[stat.newValue]}
-                        loading={loading}
-                        key={stat.value}
-                    />
-                ))}
+                {stats.map(stat => {
+                    let statData = timelineData.data[0];
+                    if (country)
+                        statData = countriesData.data.find(
+                            countryData =>
+                                countryData.code.toLowerCase() === country
+                        ).latest_data;
+                    return (
+                        <Stat
+                            name={stat.label}
+                            value={statData[stat.value]}
+                            newValue={statData[stat.newValue]}
+                            key={stat.value}
+                        />
+                    );
+                })}
             </div>
             <CountrySelector />
             <Map />
-            <div className={`donate`}>
-                <p>
-                    For the price of a pack of Corona 🍻, you could help some
-                    people.
-                </p>
-                <div className={`buttons`}>
-                    {donate.map(button => (
-                        <a
-                            href={button.link}
-                            className={button.class}
-                            target={`_blank`}
-                            key={button.class}
-                        >
-                            {button.label}
-                        </a>
-                    ))}
-                </div>
-            </div>
+
+            <Donate />
             <a
                 href={`https://www.nhs.uk/conditions/coronavirus-covid-19/`}
                 target={`_blank`}
@@ -248,16 +163,9 @@ const Index = ({ data }) => {
     );
 };
 
-// This gets called on every request
-export async function getServerSideProps() {
-    // Fetch data from external API
-    const res = await fetch(
-        `https://thevirustracker.com/free-api?global=stats`
-    );
-    const data = await res.json();
-
-    // Pass data to the page via props
-    return { props: { data } };
-}
+// export async function getServerSideProps() {
+//     const data = await fetcher('https://corona-api.com/timeline');
+//     return { props: { data } };
+// }
 
 export default Index;

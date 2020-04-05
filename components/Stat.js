@@ -53,7 +53,7 @@ const Stat = ({ name, value, newValue, loading }) => (
                     duration={300}
                     formatValue={n => n.toLocaleString()}
                 />
-                <div className={`new-cases`}>
+                {/* <div className={`new-cases`}>
                     <span className={`new-label`}>
                         new today -{' '}
                         <span className={`value`}>
@@ -62,7 +62,7 @@ const Stat = ({ name, value, newValue, loading }) => (
                                 : `N/A`}
                         </span>
                     </span>
-                </div>
+                </div> */}
             </>
         )}
     </StyledStat>

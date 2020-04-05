@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import Select from 'react-select';
 import { useEffect } from 'react';
 import { flag } from 'country-emoji';
+import useSwr from 'swr';
 
 import { CountryContext } from '../global-state/country';
 
@@ -41,26 +42,31 @@ const customStyles = {
 };
 
 const options = [{ value: null, label: `🌍 World` }];
+const fetcher = url => fetch(url).then(res => res.json());
 
 const CountrySelector = () => {
     const { country, setCountry } = useContext(CountryContext);
+    const { data: countries, error } = useSwr(
+        'https://corona-api.com/countries?include=timeline',
+        fetcher
+    );
+
+    if (error) return <p>error</p>;
+    if (!countries) return <p>loading</p>;
 
     useEffect(() => {
         if (options.length === 1) {
-            fetchData();
+            generateOptions();
         }
     }, []);
 
-    const fetchData = async () => {
-        const res = await fetch(`https://restcountries.eu/rest/v2/all`);
-        const data = await res.json();
-
-        data.map(country =>
+    const generateOptions = () => {
+        countries.data.map(country => {
             options.push({
-                value: country.alpha2Code.toLowerCase(),
-                label: `${flag(country.alpha2Code) || ''} ${country.name}`,
-            })
-        );
+                value: country.code.toLowerCase(),
+                label: `${flag(country.code) || ''} ${country.name}`,
+            });
+        });
     };
 
     const handleChange = selectedOption => {
