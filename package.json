@@ -1,10 +1,17 @@
 {
     "name": "rona",
-    "version": "1.0.0",
+    "description": "Live counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific.",
+    "version": "0.0.1",
     "scripts": {
-        "dev": "next",
-        "build": "next build",
-        "start": "next start"
+        "dev": "sapper dev",
+        "build": "yarn build:tailwind && sapper build --legacy",
+        "export": "sapper export --legacy",
+        "start": "node __sapper__/build",
+        "cy:run": "cypress run",
+        "cy:open": "cypress open",
+        "test": "run-p --race dev cy:run",
+        "watch:tailwind": "postcss static/tailwind.css -o static/index.css -w",
+        "build:tailwind": "NODE_ENV=production postcss static/tailwind.css -o static/index.css"
     },
     "husky": {
         "hooks": {
@@ -12,25 +19,36 @@
         }
     },
     "dependencies": {
-        "country-emoji": "^1.5.0",
-        "isomorphic-unfetch": "^3.0.0",
+        "@fullhuman/postcss-purgecss": "^2.1.2",
+        "axios": "^0.19.2",
+        "compression": "^1.7.1",
+        "country-emoji": "^1.5.3",
         "moment": "^2.24.0",
-        "next": "latest",
-        "react": "^16.7.0",
-        "react-animated-number": "^0.4.4",
-        "react-dom": "^16.7.0",
-        "react-moment": "^0.9.7",
-        "react-select": "^3.0.8",
-        "react-spinners": "^0.8.1",
-        "styled-components": "^4.0.0",
-        "styled-normalize": "^8.0.7",
-        "swr": "^0.2.0"
+        "polka": "next",
+        "sirv": "^0.4.0",
+        "svelte-select": "^3.6.2"
     },
     "devDependencies": {
-        "babel-plugin-styled-components": "^1.8.0",
+        "@babel/core": "^7.0.0",
+        "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+        "@babel/plugin-transform-runtime": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
+        "@babel/runtime": "^7.0.0",
+        "@rollup/plugin-commonjs": "^11.0.0",
+        "@rollup/plugin-json": "^4.0.2",
+        "@rollup/plugin-node-resolve": "^7.0.0",
+        "@rollup/plugin-replace": "^2.2.0",
         "husky": "^4.2.3",
+        "npm-run-all": "^4.1.5",
+        "postcss-cli": "^7.1.0",
         "prettier": "1.19.1",
-        "pretty-quick": "^2.0.1"
-    },
-    "license": "ISC"
+        "pretty-quick": "^2.0.1",
+        "rollup": "^1.20.0",
+        "rollup-plugin-babel": "^4.0.2",
+        "rollup-plugin-svelte": "^5.0.1",
+        "rollup-plugin-terser": "^4.0.4",
+        "sapper": "^0.27.0",
+        "svelte": "^3.0.0",
+        "tailwindcss": "^1.2.0"
+    }
 }
