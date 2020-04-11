@@ -23,6 +23,27 @@
             map.removeEventListener('click', handleClick);
         };
     });
+
+    const clearMap = async () => {
+        const currentSelctedCountry = await map.querySelectorAll(
+            `[cc].selected`
+        )[0];
+        currentSelctedCountry &&
+            (await currentSelctedCountry.classList.remove(`selected`));
+    };
+
+    country.subscribe(async newValue => {
+        if (map) {
+            // first remove any country which might have .selected class
+            await clearMap();
+            if (newValue) {
+                // add .selected class to new country
+                map.querySelectorAll(
+                    `[cc='${newValue.toLowerCase()}']`
+                )[0].classList.add(`selected`);
+            }
+        }
+    });
 </script>
 
 <style>
@@ -40,6 +61,11 @@
 
     [cc]:hover {
         opacity: 0.25;
+    }
+
+    :global([cc].selected) {
+        opacity: 0.25;
+        fill: #d82239;
     }
 </style>
 

@@ -3,7 +3,13 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta name="theme-color" content="#333333" />
+        <title>Coronavirus (COVID-19) Live Counter</title>
+        <meta
+            name="description"
+            content="Live counter of the Coronavirus (COVID-19) showing Confirmed, Recovered and Deaths numbers worldwide and country specific."
+        />
+        <link rel="canonical" href="https://rona.live" />
+        <meta name="theme-color" content="#101010" />
 
         %sapper.base%
 
@@ -13,7 +19,22 @@
             href="manifest.json"
             crossorigin="use-credentials"
         />
-        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="icon" type="image/png" href="favicon.ico" />
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-87682044-4"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-87682044-4');
+        </script>
 
         <!-- Sapper generates a <style> tag containing critical CSS
 	     for the current page. CSS for the rest of the app is

@@ -25,7 +25,7 @@
 </script>
 
 <p class={`opacity-50`}>Last updated: {moment(data.updated_at).fromNow()}</p>
-<div class={`grid gap-4`}>
+<div class={`grid gap-4 md:grid-cols-3`}>
     {#each stats as { label, value }, i}
         <Stat {label} value={data[value] || data.latest_data[value]} />
     {/each}

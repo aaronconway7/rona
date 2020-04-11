@@ -43,10 +43,6 @@
     });
 </script>
 
-<svelte:head>
-    <title>Sapper project template</title>
-</svelte:head>
-
 <h1 class={`text-2xl font-bold`}>
     Co
     <span class={`text-red-700`}>rona</span>

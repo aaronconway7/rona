@@ -16,7 +16,7 @@
             Aaron
         </a>
     </span>
-    <div class={`max-w-2xl mx-auto py-24 px-12 grid gap-8 content-center`}>
+    <div class={`max-w-4xl mx-auto py-24 px-12 grid gap-8 content-center`}>
         <slot />
     </div>
 </main>

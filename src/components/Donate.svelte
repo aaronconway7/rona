@@ -53,7 +53,7 @@
 </style>
 
 <p>For the price of a pack of Corona 🍻, you could help some people.</p>
-<div class={`grid gap-2`}>
+<div class={`grid gap-2 md:grid-cols-3`}>
     {#each buttons as button, i}
         <a
             href={button.link}

@@ -1,4 +1,7 @@
 <script>
+    import { onMount } from 'svelte';
+    import { country } from '../store.js';
+
     export let label;
     export let value;
 </script>
@@ -12,5 +15,5 @@
 
 <div class={`stat border p-4`}>
     <h2 class={`font-bold`}>{label}</h2>
-    <span class={`text-4xl opacity-50`}>{value.toLocaleString()}</span>
+    <span class={`text-4xl opacity-50`} id={`${label}-counter`}>{value.toLocaleString()}</span>
 </div>
