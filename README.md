@@ -1,20 +1,24 @@
-# Rona
+# New Project
 
-> Live counter of Coronavirus (COV-19) [See here](https://rona.live)
+> ✨ Bootstrapped with Create Snowpack App (CSA).
 
-Using API provided by [https://corona-api.com/](https://corona-api.com/)
+## Available Scripts
 
-No money was made from the making of this project.
+### npm start
 
----
+Runs the app in the development mode.
+Open http://localhost:8080 to view it in the browser.
 
-### **Tech Stack**
+The page will reload if you make edits.
+You will also see any lint errors in the console.
 
--   Svelte (Sapper)
--   Tailwind css
+### npm run build
 
----
+Builds a static copy of your site to the `build/` folder.
+Your app is ready to be deployed!
 
-### **Author**
+**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/main/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.json` config file.
 
-[Aaron Conway](https://aaronconway.co.uk)
+### Q: What about Eject?
+
+No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
