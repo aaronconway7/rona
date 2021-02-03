@@ -26,6 +26,47 @@
             href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="canonical" href="https://rona.live" />
+        <meta name="theme-color" content="#0f192c" />
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-87682044-4"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-87682044-4');
+        </script>
+
+        <!--  Essential META Tags -->
+        <meta
+            property="og:title"
+            content="rona.live | Coronavirus (COVID-19) Dashboard"
+        />
+        <meta
+            property="og:description"
+            content="Dashboard to track coronavirus COVID-19 cases and deaths both worldwide and by individual country. Show statistics for both today and all time."
+        />
+        <meta property="og:image" content="./screenshot.png" />
+        <meta property="og:url" content="https://rona.live" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <!--  Non-Essential, But Recommended -->
+        <meta
+            property="og:site_name"
+            content="rona.live | Coronavirus (COVID-19) Dashboard"
+        />
+        <meta name="twitter:image:alt" content="Screenshot of rona.live" />
+
+        <!--  Non-Essential, But Required for Analytics -->
+        <!-- <meta property="fb:app_id" content="your_app_id" /> -->
+        <meta name="twitter:site" content="@aaronconway7" />
     </head>
     <body class="h-full bg-gray-900 flex flex-col">
         <script type="module" src="/dist/index.js"></script>

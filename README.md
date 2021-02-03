@@ -1,24 +1,17 @@
-# New Project
+# 🦠 Rona
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ffc2a54b-f017-4718-aacb-850a505138e7/deploy-status)](https://app.netlify.com/sites/rona/deploys)
 
-## Available Scripts
+> Dashboard to track coronavirus COVID-19 cases and deaths both worldwide and by individual country. Show statistics for both today and all time.
 
-### npm start
+![Screenshot](./public/screenshot.png)
 
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
+## Stack
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+-   Svelte 😎
+-   Tailwindcss 🎨
+-   Snowpack ⛰️
 
-### npm run build
+## Credits
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
-
-**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/main/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.json` config file.
-
-### Q: What about Eject?
-
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+API provied by [disease.sh](https://disease.sh/)

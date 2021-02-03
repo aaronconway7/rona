@@ -1,4 +1,4 @@
-<p class="text-gray-700 text-center px-4 font-mono text-sm">
+<p class="text-gray-700 text-center px-8 font-mono text-sm">
     to optimise performance, we only show a limited number of results but you
     can search for hidden countries above!
 </p>
