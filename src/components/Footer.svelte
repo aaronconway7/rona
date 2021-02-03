@@ -7,7 +7,8 @@
     <a
         class="border border-gray-600 hover:border-gray-400 p-2"
         href="https://disease.sh/"
-        target="_blank">
+        target="_blank"
+        rel="noopener">
         disease.sh
     </a>
 </footer>

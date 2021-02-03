@@ -12,7 +12,8 @@
         <a
             class="underline hover:text-gray-300"
             href="https://aaronconway.co.uk"
-            target="_blank">
+            target="_blank"
+            rel="noopener">
             aaron
         </a>
     </span>

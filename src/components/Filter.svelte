@@ -22,7 +22,11 @@
     ];
 </script>
 
+<label for="search" class="block text-left opacity-50 text-xs mb-1 sr-only">
+    Search
+</label>
 <input
+    id="search"
     type="search"
     class="w-full rounded bg-gray-700 py-2 px-4 mb-2 outline-none
     focus:bg-gray-600"
