@@ -2,6 +2,7 @@
     import { flip } from 'svelte/animate';
     import query from './helpers/query';
 
+    import EmptyMessage from './components/EmptyMessage.svelte';
     import CountryCard from './components/CountryCard.svelte';
     import ScrollToTop from './components/ScrollToTop.svelte';
     import Header from './components/Header.svelte';
@@ -96,13 +97,13 @@
     <Filter bind:search bind:sortedBy />
     <div class="data-grid grid gap-4">
         {#await allData}
-            <p class="text-gray-500 pt-6">⏳ loading worldwide data...</p>
+            <EmptyMessage>⏳ loading worldwide data...</EmptyMessage>
         {:then data}
             {#if `worldwide`.includes(search.toLowerCase())}
                 <CountryCard {data} global={true} />
             {/if}
         {:catch error}
-            <p class="text-gray-500 pt-6">❌ An error occurred!</p>
+            <EmptyMessage>❌ An error occurred!</EmptyMessage>
         {/await}
 
         {#await countryData}
@@ -124,10 +125,10 @@
                 )
                 .sort((a, b) => b[sortedBy] - a[sortedBy])
                 .slice(0, count).length === 0}
-                <p class="text-gray-500 pt-6">😬 No country found!</p>
+                <EmptyMessage>😬 No country found!</EmptyMessage>
             {/if}
         {:catch error}
-            <p class="text-gray-500 pt-6">❌ An error occurred!</p>
+            <EmptyMessage>❌ An error occurred!</EmptyMessage>
         {/await}
     </div>
     {#if y > h / 2}
