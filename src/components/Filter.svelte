@@ -8,8 +8,12 @@
             value: `cases`
         },
         {
-            label: `☠️ deaths`,
+            label: `💀 deaths`,
             value: `deaths`
+        },
+        {
+            label: `💉 vaccinated`,
+            value: `vaccinated`
         },
         {
             label: `🧑‍🤝‍🧑 population`,
@@ -24,16 +28,13 @@
     focus:bg-gray-600"
     placeholder="search..."
     bind:value={search} />
-<div class="flex flex-wrap gap-2 mb-4 md:justify-end items-center text-xs">
-    <span>sort by:</span>
-    <div class="flex flex-wrap gap-2 md:justify-end">
-        {#each filters as filter}
-            <button
-                class={`border border-gray-700 p-1 rounded bg-gray-100
+<div class="flex flex-wrap space-x-2 md:justify-end text-xs mb-4">
+    {#each filters as filter}
+        <button
+            class={`border border-gray-700 p-1 rounded bg-gray-100
                     bg-opacity-10 ${sortedBy === filter.value && `bg-blue-600 bg-opacity-100`}`}
-                on:click={() => (sortedBy = filter.value)}>
-                {filter.label}
-            </button>
-        {/each}
-    </div>
+            on:click={() => (sortedBy = filter.value)}>
+            {filter.label}
+        </button>
+    {/each}
 </div>
