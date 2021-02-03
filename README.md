@@ -1,20 +1,17 @@
-# Rona
+# 🦠 Rona
 
-> Live counter of Coronavirus (COV-19) [See here](https://rona.live)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ffc2a54b-f017-4718-aacb-850a505138e7/deploy-status)](https://app.netlify.com/sites/rona/deploys)
 
-Using API provided by [https://corona-api.com/](https://corona-api.com/)
+> Dashboard to track coronavirus COVID-19 cases and deaths both worldwide and by individual country. Show statistics for both today and all time.
 
-No money was made from the making of this project.
+![Screenshot](./public/screenshot.png)
 
----
+## Stack
 
-### **Tech Stack**
+-   Svelte 😎
+-   Tailwindcss 🎨
+-   Snowpack ⛰️
 
--   Svelte (Sapper)
--   Tailwind css
+## Credits
 
----
-
-### **Author**
-
-[Aaron Conway](https://aaronconway.co.uk)
+API provied by [disease.sh](https://disease.sh/)
