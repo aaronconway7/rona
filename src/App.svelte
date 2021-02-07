@@ -1,6 +1,7 @@
 <script>
     import { flip } from 'svelte/animate';
     import query from './helpers/query';
+    import dayjs from 'dayjs';
 
     import EmptyMessage from './components/EmptyMessage.svelte';
     import CountryCard from './components/CountryCard.svelte';
@@ -13,6 +14,10 @@
 
     let search, sortedBy, y, h;
     let count = 11;
+    const today = dayjs().format(`M/D/YY`);
+    const yesterday = dayjs()
+        .subtract(2, `day`)
+        .format(`M/D/YY`);
 
     const getAllData = async () => {
         const [allData, vaccineData] = await Promise.all([
@@ -24,17 +29,11 @@
             )
         ]);
 
-        const today =
-            vaccineData[
-                Object.keys(vaccineData)[Object.keys(vaccineData).length - 1]
-            ];
-        const yesterday =
-            vaccineData[
-                Object.keys(vaccineData)[Object.keys(vaccineData).length - 2]
-            ];
+        const todayData = vaccineData[today];
+        const yesterdayData = vaccineData[yesterday];
 
-        const vaccinated = today;
-        const todayVaccinated = today - yesterday;
+        const vaccinated = todayData;
+        const todayVaccinated = todayData - yesterdayData;
 
         allData.vaccinated = vaccinated;
         allData.todayVaccinated = todayVaccinated;
@@ -53,24 +52,17 @@
         ]);
 
         await vaccineData.forEach(v => {
-            const today =
-                v.timeline[
-                    Object.keys(v.timeline)[Object.keys(v.timeline).length - 1]
-                ];
-            const yesterday =
-                v.timeline[
-                    Object.keys(v.timeline)[Object.keys(v.timeline).length - 2]
-                ];
+            const todayData = v.timeline[today];
+            const yesterdayData = v.timeline[yesterday];
 
-            const vaccinated = today;
-            const todayVaccinated = today - yesterday;
+            const vaccinated = todayData;
+            const todayVaccinated = todayData - yesterdayData;
 
-            countriesData.find(
-                c => c.country === v.country
-            ).vaccinated = vaccinated;
-            countriesData.find(
-                c => c.country === v.country
-            ).todayVaccinated = todayVaccinated;
+            const country = countriesData.find(c => c.country === v.country);
+            if (country) {
+                country.vaccinated = vaccinated;
+                country.todayVaccinated = todayVaccinated;
+            }
         });
 
         return countriesData;
