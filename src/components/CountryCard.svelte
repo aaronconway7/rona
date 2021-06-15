@@ -68,9 +68,13 @@
         <div
             class="stat-row grid text-xs border-t border-gray-600 p-2 text-right">
             <span class="font-bold">{stat.label}</span>
-            {#each timePeriods as timePeriod}
-                <span class="{data[stat[timePeriod]] ?? `opacity-25`}">{data[stat[timePeriod]]?.toLocaleString() || `unknown`}</span>
-            {/each}
+            {#if stat.total === `vaccinated`}
+                 <span class="col-span-2">{data[stat[`total`]]?.toLocaleString() || `unknown`}</span>
+            {:else}
+                {#each timePeriods as timePeriod}
+                    <span class="{data[stat[timePeriod]] ?? `opacity-25`}">{data[stat[timePeriod]]?.toLocaleString() || `unknown`}</span>
+                {/each}
+            {/if}
         </div>
     {/each}
 </div>

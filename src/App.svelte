@@ -14,7 +14,9 @@
 
     let search, sortedBy, y, h;
     let count = 11;
-    const today = dayjs().format(`M/D/YY`);
+    const today = dayjs()
+        .subtract(1, `day`)
+        .format(`M/D/YY`);
     const yesterday = dayjs()
         .subtract(2, `day`)
         .format(`M/D/YY`);
@@ -28,6 +30,9 @@
                 `https://disease.sh/v3/covid-19/vaccine/coverage?lastdays=all`
             )
         ]);
+
+        console.log('allData', allData);
+        console.log('vaccineData', vaccineData);
 
         const todayData = vaccineData[today];
         const yesterdayData = vaccineData[yesterday];
