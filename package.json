@@ -25,7 +25,7 @@
         "country-emoji": "^1.5.4",
         "dayjs": "^1.10.4",
         "list.js": "^2.3.1",
-        "svelte": "^3.32.1",
+        "svelte": "^3.49.0",
         "tailwindcss": "^2.0.2"
     }
 }
